@@ -37,9 +37,10 @@ class HelloWorldModelHelloWorld extends JModelItem
 	protected function populateState()
 	{
 		// Get the message id
+		$this->context	= "message";		//unique id for this view
 		$jinput = JFactory::getApplication()->input;
-		$id     = $jinput->get('id', 1, 'INT');
-		$this->setState('message.id', $id);
+		$id     = $jinput->get('id', 0, 'INT');
+		$this->setState($this->context.'.id', $id);
 
 		// Load the parameters.
 		$this->setState('params', JFactory::getApplication()->getParams());
@@ -70,15 +71,27 @@ class HelloWorldModelHelloWorld extends JModelItem
 	{
 		if (!isset($this->item))
 		{
-			$id    = $this->getState('message.id');
+			$id	    	= (int)$this->getState($this->context.'.id');
+			$usr    	= (int)JFactory::getUser()->id;
+
 			$db    = JFactory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('h.greeting, h.params, c.title as category')
-				  ->from('#__helloworld as h')
-				  ->leftJoin('#__categories as c ON h.catid=c.id')
-				  ->where('h.id=' . (int)$id);
-			$db->setQuery((string)$query);
+			$query	->select( 'h.id, h.greeting, h.uid, h.params, c.title as category' )
+			    	->from( $db->quoteName('#__helloworld').' as h' )
+			    	->leftJoin( $db->quoteName('#__categories').' as c ON h.catid=c.id' );
 
+			if( $id>0 )
+			{	// user indicated a specific message item
+				$query->where('h.id=' . (int)$id);
+			} elseif( $usr == 0 ) {
+				// user is not logged in so select first item
+				$query->where('h.id=1');				
+			} else {
+				// user is logged in so get his own (first) item
+				$query->where('h.uid=' . $usr);
+			}
+
+			$db->setQuery((string)$query);
 			if ($this->item = $db->loadObject())
 			{
 				// Load the JSON string
@@ -90,8 +103,30 @@ class HelloWorldModelHelloWorld extends JModelItem
 				$params = clone $this->getState('params');
 				$params->merge($this->item->params);
 				$this->item->params = $params;
+
+				$this->setState($this->context.'.id', $this->item->id);
 			}
 		}
 		return $this->item;
+	}
+
+	/**
+	 *	Update current message
+ 	 *	@return true on success
+	 */
+	public function updateThisItem($msg)
+	{
+		$this->item 	= null;	    	    	    	    		//invalidate cached item
+
+		// Create an object for the record we are going to update.
+
+		$obj	    	= new stdClass();	    	    	    	//create empty object
+		$obj->id    	= $this->getState($this->context.'.id');	//key for present item
+		$obj->greeting	= $msg; 	    	    	    	    	//new value
+		$obj->uid   	= (int)JFactory::getUser()->id; 	    	//owner of this greeting message
+
+		// Update their details in the users table using id as the primary key.
+		$db		= JFactory::getDbo();
+		return $db->updateObject('#__helloworld', $obj, 'id');  	//true on success
 	}
 }

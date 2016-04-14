@@ -31,10 +31,10 @@ class HelloWorldModelHelloWorlds extends JModelList
 			$config['filter_fields'] = array(
 				'id',
 				'greeting',
+				'uid',
 				'published'
 			);
 		}
-
 		parent::__construct($config);
 	}
 
@@ -130,8 +130,9 @@ class HelloWorldModelHelloWorlds extends JModelList
 		$query = $db->getQuery(true);
 
 		// Create the base select statement.
-		$query	->select('*')
-			->from($db->quoteName('#__helloworld'));
+		$query	->select('u.name as uname, h.*' )
+			->from($db->quoteName('#__helloworld').' as h')
+			->leftJoin($db->quoteName('#__users').'as u on h.uid=u.id');
 
 		// Filter: like / search
 		$search = $this->getState('filter.search');
@@ -152,6 +153,14 @@ class HelloWorldModelHelloWorlds extends JModelList
 		elseif ($published === '')
 		{
 			$query->where('(published IN (0, 1))');
+		}
+
+		// Filter by user ID
+		$uid	= $this->getState('filter.uid');
+
+		if (is_numeric($uid))
+		{
+			$query->where('h.uid = ' . (int) $uid);
 		}
 
 		// Add the list ordering clause.

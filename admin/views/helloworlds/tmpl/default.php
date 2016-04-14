@@ -14,7 +14,7 @@ JHtml::_('formbehavior.chosen', 'select');
 
 $listOrder	= $this->escape($this->filter_order);
 $listDirn	= $this->escape($this->filter_order_Dir);
-$nrColumns	= 5;		//number of columns in the table of the list
+$nrColumns	= 7;		//number of columns in the table of the list
 ?>
 <form action="index.php?option=com_helloworld&view=helloworlds" method="post" id="adminForm" name="adminForm">
 	<?php if (!empty( $this->sidebar)) : ?>
@@ -39,7 +39,9 @@ $nrColumns	= 5;		//number of columns in the table of the list
 				<tr>
 				<th width="1%"><?php  echo JText::_('COM_HELLOWORLD_NUM'); ?></th>
 				<th width="2%"><?php  echo JHtml::_('grid.checkall'); ?></th>
-				<th width="90%"><?php echo JHtml::_('grid.sort', 'COM_HELLOWORLD_GREET_NAME', 'greeting', $listDirn, $listOrder); ?></th>
+				<th width="75%"><?php echo JHtml::_('grid.sort', 'COM_HELLOWORLD_GREET_NAME', 'greeting', $listDirn, $listOrder); ?></th>
+				<th width="5%"><?php  echo JHtml::_('grid.sort', 'COM_HELLOWORLD_UID', 'uid', $listDirn, $listOrder); ?></th>
+				<th width="10%"><?php echo JHtml::_('grid.sort', 'COM_HELLOWORLD_USER_NAME', 'uname', $listDirn, $listOrder); ?></th>
 				<th width="5%"><?php  echo JHtml::_('grid.sort', 'COM_HELLOWORLD_PUBLISHED', 'published', $listDirn, $listOrder); ?></th>
 				<th width="2%"><?php  echo JHtml::_('grid.sort', 'COM_HELLOWORLD_ID', 'id', $listDirn, $listOrder); ?></th>
 				</tr>
@@ -62,6 +64,8 @@ $nrColumns	= 5;		//number of columns in the table of the list
 									<?php echo $row->greeting; ?>
 								</a>
 							</td>
+							<td><?php echo $row->uid; ?></td>
+							<td><?php echo $row->uname; ?></td>
 							<td align="center"><?php echo JHtml::_('jgrid.published', $row->published, $i, 'helloworlds.', true, 'cb'); ?></td>
 							<td align="center"><?php echo $row->id; ?></td>
 						</tr>

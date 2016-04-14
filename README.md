@@ -6,4 +6,6 @@ This guide continues from the tutorial 'Developing an MVC Component' (aka the 'H
 
 Version history:
 
+v1-16 2016-04	simple front-end data entry
+
 v1-15 2016-04	initial version based on the Joomla3 tutorial: Developing an MVC Component 

@@ -18,5 +18,13 @@
 			>
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
+		<field
+			name="uid"
+			type="number"
+			label="COM_HELLOWORLD_HELLOWORLD_UID"
+			description="COM_HELLOWORLD_HELLOWORLD_UID_DESC"
+			onchange="this.form.submit();"
+			hint="COM_HELLOWORLD_HELLOWORLD_UID_SELECT"
+		/>
 	</fields>
 </form>

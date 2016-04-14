@@ -35,9 +35,10 @@ class JFormFieldHelloWorld extends JFormFieldList
 	{
 		$db    = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query	->select('h.id as id, h.greeting, c.title as category, catid')
+		$query	->select('h.id as id, h.greeting, u.name as uname, h.uid, c.title as category, catid')
 			->from($db->quoteName('#__helloworld').' as h')
 			->leftJoin($db->quoteName('#__categories').' as c on h.catid=c.id')
+			->leftJoin($db->quoteName('#__users').' as u on h.uid=u.id')
 			// Retrieve only published items
 			->where('h.published = 1');
 		$db->setQuery((string) $query);
