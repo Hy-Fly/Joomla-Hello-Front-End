@@ -6,6 +6,8 @@ This guide continues from the tutorial 'Developing an MVC Component' (aka the 'H
 
 Version history:
 
+v1-19 2016-04	rethink front-end permissions
+
 v1-18 2016-04	clone the back-end record list view page to the front-end
 
 v1-17 2016-04	clone the back-end record item editing page to the front-end

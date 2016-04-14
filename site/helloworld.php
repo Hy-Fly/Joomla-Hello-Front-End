@@ -11,7 +11,15 @@
 defined('_JEXEC') or die('Restricted access');
 
 // Get an instance of the controller prefixed by HelloWorld
-$controller = JControllerLegacy::getInstance('HelloWorld');
+$controller	= JControllerLegacy::getInstance('HelloWorld');
+
+// Check that the (logged-in) user is allowed to use this component
+$canAccess	= JFactory::getUser()->authorise('helloworld.access', 'com_helloworld');
+if (!$canAccess)
+{
+	JFactory::getApplication()->enqueueMessage(JText::_('COM_HELLOWORLD_ACCESS_NO_ACCESS'), 'error');
+	return false;
+}
 
 // Perform the Request task
 $input = JFactory::getApplication()->input;

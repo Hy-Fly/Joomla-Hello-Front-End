@@ -52,6 +52,12 @@ class HelloWorldViewHelloWorld extends JViewLegacy
 			return false;
 		}
 
+		if (!$this->canDo->get('helloworld.view'))
+		{
+			JFactory::getApplication()->enqueueMessage(JText::_('COM_HELLOWORLD_ACCESS_NO_VIEW'), 'error');
+			return false;
+		}
+
 		// Set the toolbar
 		$this->addToolBar();
 		echo JToolbar::getInstance('toolbar')->render('toolbar');
