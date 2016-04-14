@@ -31,16 +31,6 @@ class HelloWorldViewHelloWorld extends JViewLegacy
 	 */
 	public function display($tpl = null)
 	{
-		// some preparations for testing this step in the tutorial
-		$state	    	= $this->get('State');
-		$id 	    	= (int)$state->get('helloworld.id');
-		if($id <= 0)
-		{
-			$state->set('helloworld.id', (int)1 );
-		}
-		$this->setLayout('edit');
-
-
 		// include settings from the admin backend
 		$this->includeAdminEnv();
 
@@ -65,11 +55,6 @@ class HelloWorldViewHelloWorld extends JViewLegacy
 		// Set the toolbar
 		$this->addToolBar();
 		echo JToolbar::getInstance('toolbar')->render('toolbar');
-
-		// display caller
-		$usr  	= JFactory::getUser()->id;	//logged-on user
-		$id 	= $this->item->id;
-		echo "\n<p>Hello user $usr. This is item # $id";
 
 		// Display the template
 		parent::display($tpl);

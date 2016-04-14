@@ -45,42 +45,4 @@
 			<option value="0">JOPTION_SELECT_CATEGORY</option>
 		</field>
 	</fieldset>
-	<fields name="params">
-		<fieldset
-				name="params"
-				label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
-		>
-			<field
-					name="show_category"
-					type="list"
-					label="COM_HELLOWORLD_HELLOWORLD_FIELD_SHOW_CATEGORY_LABEL"
-					description="COM_HELLOWORLD_HELLOWORLD_FIELD_SHOW_CATEGORY_DESC"
-					default=""
-			>
-				<option value="">JGLOBAL_USE_GLOBAL</option>
-				<option value="0">JHIDE</option>
-				<option value="1">JSHOW</option>
-			</field>
-		</fieldset>
-	</fields>
-	<fieldset
-			name="accesscontrol"
-			label="COM_HELLOWORLD_FIELDSET_RULES"
-	>
-    	<field
-				name="asset_id"
-				type="hidden"
-				filter="unset"
-				/>
-    	<field
-				name="rules"
-				type="rules"
-				label="COM_HELLOWORLD_FIELD_RULES_LABEL"
-				filter="rules"
-				validate="rules"
-				class="inputbox"
-				component="com_helloworld"
-				section="message"
-				/>
-    </fieldset>
 </form>

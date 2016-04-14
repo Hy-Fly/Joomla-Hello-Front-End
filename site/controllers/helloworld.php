@@ -25,24 +25,6 @@ defined('_JEXEC') or die('Restricted access');
 class HelloWorldControllerHelloWorld extends JControllerForm
 {
 	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * Force return to helloworld in stead of helloworlds view, as for this step
-	 * in the tutorial we have not yet defined a list view.
-	 *
-	 * @see     JControllerLegacy
-	 * @since   12.2
-	 * @throws  Exception
-	 */
-	public function __construct($config = array())
-	{
-		parent::__construct($config);
-		$this->view_list	= 'helloworld';
-	}
-
-	/**
 	* Implement to allow edit or not.
 	* Treat item for which asset has not been defined yet as new item
 	* otherwise no permission will be granted to user.
