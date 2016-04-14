@@ -15,40 +15,14 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  0.0.1
  */
-class HelloWorldModelHelloWorld extends JModelItem
+class HelloWorldModelHelloWorld extends JModelAdmin
 {
 	/**
-	 * @var object item
-	 */
-	protected $item;
-
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * This method should only be called once per instantiation and is designed
-	 * to be called on the first call to the getState() method unless the model
-	 * configuration flag to ignore the request is set.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @return	void
-	 * @since	2.5
-	 */
-	protected function populateState()
-	{
-		// Get the message id
-		$this->context	= "message";		//unique id for this view
-		$jinput = JFactory::getApplication()->input;
-		$id     = $jinput->get('id', 0, 'INT');
-		$this->setState($this->context.'.id', $id);
-
-		// Load the parameters.
-		$this->setState('params', JFactory::getApplication()->getParams());
-		parent::populateState();
-	}
-
-	/**
 	 * Method to get a table object, load it if necessary.
+	 * Note that the directories
+	 *	administrator/components/com_helloworld/table[s]
+	 * are in the path so the frontend will find the table
+	 * definitions in the backend.
 	 *
 	 * @param   string  $type    The table name. Optional.
 	 * @param   string  $prefix  The class prefix. Optional.
@@ -64,69 +38,63 @@ class HelloWorldModelHelloWorld extends JModelItem
 	}
 
 	/**
-	 * Get the message
-	 * @return object The message to be displayed to the user
+	 * Method to get the record form.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  mixed    A JForm object on success, false on failure
+	 *
+	 * @since   1.6
 	 */
-	public function getItem()
+	public function getForm($data = array(), $loadData = true)
 	{
-		if (!isset($this->item))
-		{
-			$id	    	= (int)$this->getState($this->context.'.id');
-			$usr    	= (int)JFactory::getUser()->id;
-
-			$db    = JFactory::getDbo();
-			$query = $db->getQuery(true);
-			$query	->select( 'h.id, h.greeting, h.uid, h.params, c.title as category' )
-			    	->from( $db->quoteName('#__helloworld').' as h' )
-			    	->leftJoin( $db->quoteName('#__categories').' as c ON h.catid=c.id' );
-
-			if( $id>0 )
-			{	// user indicated a specific message item
-				$query->where('h.id=' . (int)$id);
-			} elseif( $usr == 0 ) {
-				// user is not logged in so select first item
-				$query->where('h.id=1');				
-			} else {
-				// user is logged in so get his own (first) item
-				$query->where('h.uid=' . $usr);
-			}
-
-			$db->setQuery((string)$query);
-			if ($this->item = $db->loadObject())
-			{
-				// Load the JSON string
-				$params = new JRegistry;
-				$params->loadString($this->item->params, 'JSON');
-				$this->item->params = $params;
-
-				// Merge global params with item params
-				$params = clone $this->getState('params');
-				$params->merge($this->item->params);
-				$this->item->params = $params;
-
-				$this->setState($this->context.'.id', $this->item->id);
-			}
-		}
-		return $this->item;
+		$form = $this->loadForm( 'com_helloworld.helloworld', 'helloworld',
+				array( 'control'=>'jform', 'load_data'=>$loadData ) );
+		return ( empty($form) ) ? false : $form;
 	}
 
 	/**
-	 *	Update current message
- 	 *	@return true on success
+	 * Method to get the script that have to be included on the form
+	 *
+	 * @return string	Script files
 	 */
-	public function updateThisItem($msg)
+	public function getScript()
 	{
-		$this->item 	= null;	    	    	    	    		//invalidate cached item
+		return 'components/com_helloworld/models/forms/helloworld.js';
+	}
 
-		// Create an object for the record we are going to update.
+	/**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
+	 */
+	protected function loadFormData()
+	{
+		// Check the UserState session cache for previously entered form data.
+		$data = JFactory::getApplication()->getUserState(
+			'com_helloworld.edit.helloworld.data',
+			array()
+		);
 
-		$obj	    	= new stdClass();	    	    	    	//create empty object
-		$obj->id    	= $this->getState($this->context.'.id');	//key for present item
-		$obj->greeting	= $msg; 	    	    	    	    	//new value
-		$obj->uid   	= (int)JFactory::getUser()->id; 	    	//owner of this greeting message
+		if (empty($data))
+		{	// if no previous data is present, get the item record from the db
+			$data = $this->getItem();
+		}
 
-		// Update their details in the users table using id as the primary key.
-		$db		= JFactory::getDbo();
-		return $db->updateObject('#__helloworld', $obj, 'id');  	//true on success
+		return $data;
+	}
+
+	/**
+	 * Method to check if it's OK to delete a message. Overwrites JModelAdmin::canDelete
+	 */
+	protected function canDelete($record)
+	{
+		if( !empty( $record->id ) )
+		{
+			return JFactory::getUser()->authorise( "core.delete", "com_helloworld.message." . $record->id );
+		}
 	}
 }

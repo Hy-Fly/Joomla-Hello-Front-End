@@ -1,0 +1,21 @@
+.btn-toolbar {
+	margin-bottom: 5px;
+	}
+.btn-toolbar .btn-wrapper {
+	display: inline-block;
+	margin: 0 0 5px 5px;
+	}
+@media (max-width: 480px) {
+	.btn-toolbar .btn-wrapper {
+		display: block;
+		margin: 0px 10px 5px 10px;
+		}
+	.btn-toolbar .btn-wrapper .btn {
+		width: 100% !important;
+		}
+	}
+@media (max-width: 320px) {
+	.btn-toolbar .btn-wrapper .btn {
+		width: 100% !important;
+		}
+	}
