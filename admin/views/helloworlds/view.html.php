@@ -101,10 +101,11 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 		}
 		if ($this->canDo->get('core.edit'))		// show export button if admin user has edit permissions
 		{
-			// dedicated button to start subcontroller with format='raw'
+			// dedicated buttons to start subcontroller with format='raw'
 			$toolbar	= JToolbar::getInstance('toolbar');
 			$toolbar->addButtonPath(JPATH_COMPONENT.'/button');
 			$toolbar->appendButton('RawFormat', 'download', 'Export csv', 'helloexport.exportcsv');
+			$toolbar->appendButton('RawFormat', 'download', 'Export xls', 'helloexport.exportxls');
 		}
 		if ($this->canDo->get('core.admin'))
 		{
