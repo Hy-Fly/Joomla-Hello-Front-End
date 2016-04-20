@@ -104,8 +104,10 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 			// dedicated buttons to start subcontroller with format='raw'
 			$toolbar	= JToolbar::getInstance('toolbar');
 			$toolbar->addButtonPath(JPATH_COMPONENT_ADMINISTRATOR.'/button');
-			$toolbar->appendButton('RawFormat', 'download', 'Export csv', 'helloexport.exportcsv');
-			$toolbar->appendButton('RawFormat', 'download', 'Export xls', 'helloexport.exportxls');
+			$toolbar->appendButton('RawFormat',  'download', 'Export csv', 'helloexport.exportcsv');
+			$toolbar->appendButton('RawFormat',  'download', 'Export xls', 'helloexport.exportxls');
+			$toolbar->appendButton('ImportFile', 'upload',   'Import csv', 'helloimport.importcsv', 'importcsv');
+			$toolbar->appendButton('ImportFile', 'upload',   'Import xls', 'helloimport.importxls', 'importxls');
 		}
 	}
 

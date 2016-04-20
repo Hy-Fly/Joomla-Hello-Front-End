@@ -6,7 +6,9 @@ This guide continues from the tutorial 'Developing an MVC Component' (aka the 'H
 
 Version history:
 
-v1-22 2016-03	add excel xlsx export, based on the PHPExcel package
+v1-23 2016-04	add csv and xlsx import
+
+v1-22 2016-04	add excel xlsx export, based on the PHPExcel package
 
 v1-21 2016-04	improved export function
 
