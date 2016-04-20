@@ -42,9 +42,5 @@ class HelloWorldControllerHelloExport extends JControllerForm
 		-> setHeader('Content-Transfer-Encoding', 'binary', true)
 		-> setHeader('Expires', '0', true)
 		-> setHeader('Pragma','no-cache',true);
-
-		// Close the application gracefully.
-		$app->sendHeaders();
-		$app->close();
 	}
 }

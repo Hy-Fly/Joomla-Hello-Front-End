@@ -10,7 +10,7 @@
 	<copyright>Copyright Info</copyright>
 	<license>License Info</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.1.20</version>
+	<version>0.1.21</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>COM_HELLOWORLD_DESCRIPTION</description>
 
@@ -72,6 +72,8 @@
 			<filename>helloworld.php</filename>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
+			<!-- extra buttons files section -->
+			<folder>button</folder>
 			<!-- controllers files section -->
 			<folder>controllers</folder>
 			<!-- helpers files section -->

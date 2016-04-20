@@ -101,7 +101,10 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 		}
 		if ($this->canDo->get('core.edit'))		// show export button if admin user has edit permissions
 		{
-			JToolBarHelper::custom('helloexport.exportcsv', 'download', '', 'Export test', true);
+			// dedicated button to start subcontroller with format='raw'
+			$toolbar	= JToolbar::getInstance('toolbar');
+			$toolbar->addButtonPath(JPATH_COMPONENT.'/button');
+			$toolbar->appendButton('RawFormat', 'download', 'Export csv', 'helloexport.exportcsv');
 		}
 		if ($this->canDo->get('core.admin'))
 		{
@@ -109,6 +112,7 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 			JToolBarHelper::preferences('com_helloworld');
 		}
 	}
+
 	/**
 	 * Method to set up the document properties
 	 *
@@ -116,7 +120,9 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 	 */
 	protected function setDocument()
 	{
-		$document = JFactory::getDocument();
-		$document->setTitle(JText::_('COM_HELLOWORLD_ADMINISTRATION'));
+		$document	= JFactory::getDocument();
+		$site		= "/administrator/components/com_helloworld/";
+		$document->setTitle(  JText::_('COM_HELLOWORLD_ADMINISTRATION') );
+		$document->addScript( $site."views/helloworlds/submitbutton.js" );
 	}
 }
