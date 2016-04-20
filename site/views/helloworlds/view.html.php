@@ -99,6 +99,10 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 		{
 			JToolBarHelper::deleteList('', 'helloworlds.delete', 'JTOOLBAR_DELETE');
 		}
+		if ($this->canDo->get('core.edit'))		// show export button if admin user has edit permissions
+		{
+			JToolBarHelper::custom('helloexport.exportcsv', 'download', '', 'Export test', true);
+		}
 	}
 
 	/**
