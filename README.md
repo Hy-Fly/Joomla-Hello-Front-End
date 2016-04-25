@@ -3,8 +3,11 @@ This tutorial provides a guideline for development of a Joomla component that en
 
 This guide continues from the tutorial 'Developing an MVC Component' (aka the 'Hello World' tutorial) from this Joomla site: https://docs.joomla.org/J3.x:Developing_an_MVC_Component.
 
+See also [the wiki](https://github.com/Hy-Fly/Joomla-Hello-Front-End/wiki) for documentation.
 
 Version history:
+
+v1-24 2016-04	add import with summary screen
 
 v1-23 2016-04	add csv and xlsx import
 
@@ -22,4 +25,4 @@ v1-17 2016-04	clone the back-end record item editing page to the front-end
 
 v1-16 2016-04	simple front-end data entry
 
-v1-15 2016-04	initial version based on the Joomla3 tutorial: Developing an MVC Component 
+v1-15 2016-04	initial version based on the Joomla3 tutorial: Developing an MVC Component

@@ -21,6 +21,18 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/lib/Classes/PHPExcel.php';
 class HelloWorldControllerHelloImport extends JControllerAdmin
 {
 	/**
+	 *	import
+	 *	Defer to the viewer where all the work is done.
+	 */
+	public function import_check()
+	{
+		$view		= $this->getView( 'HelloImport', 'html');	//display user form
+		$model		= $this->getModel('HelloImport');		//for db read/write
+		$view->setModel($model, true);					//define as default model for view
+		$view->display();						//call default template
+	}
+
+	/**
 	 *	Helper functions
 	 *	Begin and end are the same, so are combined in separate helpers.
 	 */
@@ -82,7 +94,7 @@ class HelloWorldControllerHelloImport extends JControllerAdmin
 		$content	= str_replace("\n\n","\n", $content);
 		$rows		= explode("\n",trim($content));
 
-		foreach( $rows as $row ) 
+		foreach( $rows as $row )
 		{
 			if (trim($row))
 			{

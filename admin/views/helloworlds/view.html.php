@@ -108,6 +108,9 @@ class HelloWorldViewHelloWorlds extends JViewLegacy
 			$toolbar->appendButton('RawFormat',  'download', 'Export xls', 'helloexport.exportxls');
 			$toolbar->appendButton('ImportFile', 'upload',   'Import csv', 'helloimport.importcsv', 'importcsv');
 			$toolbar->appendButton('ImportFile', 'upload',   'Import xls', 'helloimport.importxls', 'importxls');
+
+			// an ordinary standard button for import. listmode=false as no list is needed
+			JToolBarHelper::custom('helloimport.import_check',  'upload', '', 'Import Check',  false);
 		}
 		if ($this->canDo->get('core.admin'))
 		{
